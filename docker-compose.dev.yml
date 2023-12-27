@@ -1,0 +1,34 @@
+---
+version: "3.8"
+services:
+  quality_metric_calculator:
+    build:
+      context: .
+      target: runner
+    env_file: .env.example
+    ports:
+      - 9060:9060
+    volumes:
+      - .:/app
+    command: python /app/main.py
+    entrypoint: /app/docker-entrypoint.sh
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL", "wget --no-verbose --tries=1 --spider http://0.0.0.0:9060/healthcheck || exit 1"
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+
+  postgres:
+    image: postgres:16.1
+    env_file: .env.example
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-db-data:/var/lib/postgresql/data
+      - ./raw_data:/ingest
+
+volumes:
+  postgres-db-data:

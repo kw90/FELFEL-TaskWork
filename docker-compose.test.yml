@@ -1,0 +1,27 @@
+---
+version: "3.8"
+services:
+  tests:
+    build:
+      context: .
+      target: tester
+    env_file: .env.example
+    volumes:
+      - .:/app
+    command: pytest -v /app/tests/
+
+  mypy:
+    build:
+      context: .
+      target: tester
+    volumes:
+      - .:/app
+    command: mypy /app/quality_metric_calculator
+
+  lint:
+    build:
+      context: .
+      target: tester
+    volumes:
+      - .:/app
+    command: pylint /app/quality_metric_calculator
