@@ -2,6 +2,8 @@
 
 Service for computing the quality of service QoS metric according to FELFEL's [task description](https://github.com/felfel-tech/recruiting/blob/main/taskwork_python_qos/TASK_DESCRIPTION.md).
 
+![Arch](images/arch.png)
+
 ## Requirements
 - Docker
 - Make
@@ -14,6 +16,8 @@ To build the image and run the service in dev mode, run
 make build
 make run
 ```
+
+Once running the API docs can be found at http://localhost:9060/docs
 
 ## Ingest CSVs to Postgres
 
